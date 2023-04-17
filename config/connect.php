@@ -1,8 +1,8 @@
 <?php
 
-    $host = "localhost";
-    $username = "root";
-    $password = "";
+    $host = "15.222.239.156";
+    $username = "dev";
+    $password = "password";
     $dbname = "career_search";
 
     // Create connection
