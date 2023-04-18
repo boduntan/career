@@ -27,6 +27,7 @@ pipeline {
                 echo 'Deploying'
                 sshagent(['web-server-key']) {
                     sh '$CONNECT curl -X GET http://admin:nexuspass@34.239.129.2:8081/repository/career-repo/webapp.zip --output webapp.zip'
+                    sh '$CONNECT curl -X GET http://admin:nexuspass@34.239.129.2:8081/repository/career-repo/connect.php --output connect.php'
                     sh '$CONNECT "curl ifconfig.io"'
                     sh '$CONNECT "sudo apt install zip -y"'
                     sh '$CONNECT "rm -rf /var/www/html/"'
@@ -48,6 +49,7 @@ pipeline {
                 echo 'Remove existing files'
                 sshagent(['web-server-key']) {
                     sh '$CONNECT "sudo rm /home/ubuntu/webapp.zip"'
+                    sh '$CONNECT "sudo rm /home/ubuntu/connect.php"'
                 }
             }
         }  
