@@ -1,6 +1,6 @@
 <?php
 
-    $host = "localhost";
+    $host = "15.222.239.156";
     $username = "root";
     $password = "";
     $dbname = "career_search";
