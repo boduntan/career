@@ -22,7 +22,7 @@ pipeline {
                     sh 'scp -o StrictHostKeyChecking=no -i $SSH_CRED webapp.zip ubuntu@ec2-3-99-244-101.ca-central-1.compute.amazonaws.com:/home/ubuntu'
                     sh '$CONNECT "curl ifconfig.io"'
                     sh '$CONNECT "sudo apt install zip -y"'
-                    sh '$CONNECT "sudo rm -rf /var/www/html/"'
+                    sh '$CONNECT "rm -rf /var/www/html/"'
                     sh '$CONNECT "mkdir /var/www/html/"'
                     // sh '$CONNECT "unzip /home/ubuntu/webapp.zip -d /home/ubuntu/app"'
                     sh '$CONNECT "unzip webapp.zip -d /var/www/html/"'
