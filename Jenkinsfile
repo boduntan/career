@@ -23,7 +23,7 @@ pipeline {
                     sh '$CONNECT "curl ifconfig.io"'
                     sh '$CONNECT "sudo apt install zip -y"'
                     sh '$CONNECT "rm -rf /var/www/html/"'
-                    sh '$CONNECT "mkdir /var/www/html/"'
+                    sh '$CONNECT "sudo mkdir -p /var/www/html/"'
                     sh '$CONNECT "unzip /var/lib/jenkins/workspace/web-app/webapp.zip -d /var/www/html/"'
                     sh '$CONNECT "rm /var/www/html/config/connect.php"'
                     sh '$CONNECT "cp /home/ubuntu/connect.php /var/www/html/config/"'
