@@ -26,8 +26,8 @@ pipeline {
             steps {
                 echo 'Deploying'
                 sshagent(['web-app-key']) {
-                    sh '$CONNECT curl GET http://35.182.19.185:8081/repository/career-repo/webapp.zip --output webapp.zip'
-                    sh '$CONNECT curl GET http://35.182.19.185:8081/repository/career-repo/connect.php --output connect.php'
+                    sh '$CONNECT curl -X GET http://35.182.19.185:8081/repository/career-repo/webapp.zip --output webapp.zip'
+                    sh '$CONNECT curl -X GET http://35.182.19.185:8081/repository/career-repo/connect.php --output connect.php'
                     sh '$CONNECT "curl ifconfig.io"'
                     sh '$CONNECT "sudo apt install zip -y"'
                     sh '$CONNECT "rm -rf /var/www/html/"'
