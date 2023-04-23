@@ -14,12 +14,21 @@ pipeline {
                 sh "zip -r webapp.zip ."
             }
         }
-        
+    
+        stage('Package') {
+            steps {
+                echo 'upload artifacts'
+                sh "curl -v -u admin:password --upload-file connect.php http://35.182.19.185:8081/repository/career-repo/connect.php"
+                sh "curl -v -u admin:password --upload-file webapp.zip http://35.182.19.185:8081/repository/career-repo/webapp.zip"
+            }
+        }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying'
                 sshagent(['web-app-key']) {
-                    sh 'scp -o StrictHostKeyChecking=no -i $SSH_CRED webapp.zip ubuntu@ec2-35-183-24-17.ca-central-1.compute.amazonaws.com:/home/ubuntu'
+                    sh '$CONNECT curl -x GET http://35.182.19.185:8081/repository/career-repo/webapp.zip --output webapp.zip'
+                    sh '$CONNECT curl -x GET http://35.182.19.185:8081/repository/career-repo/connect.php --output connect.php'
                     sh '$CONNECT "curl ifconfig.io"'
                     sh '$CONNECT "sudo apt install zip -y"'
                     sh '$CONNECT "rm -rf /var/www/html/"'
@@ -41,6 +50,7 @@ pipeline {
                 echo 'Remove existing files'
                 sshagent(['web-app-key']) {
                     sh '$CONNECT "sudo rm /home/ubuntu/webapp.zip"'
+                    sh '$CONNECT "sudo rm /home/ubuntu/connect.php"'
                 }
             }
         }
