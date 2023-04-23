@@ -18,7 +18,6 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'upload artifacts'
-                sh "curl -v -u admin:password --upload-file connect.php http://35.182.19.185:8081/repository/career-repo/connect.php"
                 sh "curl -v -u admin:password --upload-file webapp.zip http://35.182.19.185:8081/repository/career-repo/webapp.zip"
             }
         }
@@ -54,5 +53,3 @@ pipeline {
                 }
             }
         }
-    }
-}
