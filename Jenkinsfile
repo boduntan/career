@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo 'upload artifacts'
                 sh "curl -v -u admin:password --upload-file webapp.zip http://35.183.186.153:8081/repository/web_app/webapp.zip"
-                sh "curl -v -u admin:password --upload-file connect.php http://35.183.186.153:8081/repository/web_app/connect.php"
+                //sh "curl -v -u admin:password --upload-file connect.php http://35.183.186.153:8081/repository/web_app/connect.php"
             }
         }
         stage('Deploy') {
