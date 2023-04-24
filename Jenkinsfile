@@ -39,7 +39,7 @@ pipeline {
         stage('Clean-Up') {
             steps {
                 echo 'Remove existing files'
-                sshagent(['web-server-key']) {
+                sshagent(['web-app']) {
                     sh '$CONNECT "sudo rm /home/ubuntu/webapp.zip"'
                 }
             }
