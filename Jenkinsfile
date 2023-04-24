@@ -25,7 +25,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sshagent(['web-app-key']) {
+                sshagent(['web-app']) {
                     sh '$CONNECT curl -X GET http://35.183.186.153:8081/repository/web_app/webapp.zip --output webapp.zip'
                     sh '$CONNECT curl -X GET http://35.183.186.153:8081/repository/web_app/connect.php --output connect.php'
                     sh '$CONNECT "curl ifconfig.io"'
