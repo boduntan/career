@@ -2,14 +2,13 @@ pipeline {
     agent any
     environment {
         SSH_CRED = credentials('web-app')
-        def CONNECT = 'ssh -o StrictHostKeyChecking=no ubuntu@eec2-15-156-92-17.ca-central-1.compute.amazonaws.com'
+        def CONNECT = 'ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-156-92-17.ca-central-1.compute.amazonaws.com'
     }
     stages {
         
         stage('Build') {
             steps {
                 echo 'packaging app'
-                echo 'pwd'
                 sh "ls"
                 sh "pwd"
                 sh "zip -r webapp.zip ."
