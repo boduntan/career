@@ -1,33 +1,26 @@
 pipeline {
     agent any
     environment {
-        SSH_CRED = credentials('web-app-key')
-        def CONNECT = 'ssh -o StrictHostKeyChecking=no ubuntu@ec2-35-183-24-17.ca-central-1.compute.amazonaws.com'
+        SSH_CRED = credentials('web-app')
+        def CONNECT = 'ssh -o StrictHostKeyChecking=no ubuntu@eec2-15-156-92-17.ca-central-1.compute.amazonaws.com'
     }
     stages {
         
         stage('Build') {
             steps {
                 echo 'packaging app'
+                echo 'pwd'
                 sh "ls"
                 sh "pwd"
                 sh "zip -r webapp.zip ."
             }
         }
-    
-        stage('Package') {
-            steps {
-                echo 'upload artifacts'
-                sh "curl -v -u admin:password --upload-file webapp.zip http://35.182.19.185:8081/repository/career-repo/webapp.zip"
-            }
-        }
-
+        
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sshagent(['web-app-key']) {
-                    sh '$CONNECT curl -X GET http://35.182.19.185:8081/repository/career-repo/webapp.zip --output webapp.zip'
-                    sh '$CONNECT curl -X GET http://35.182.19.185:8081/repository/career-repo/connect.php --output connect.php'
+                sshagent(['web-app']) {
+                    sh 'scp -o StrictHostKeyChecking=no -i $SSH_CRED webapp.zip ubuntu@ec2-15-156-92-17.ca-central-1.compute.amazonaws.com:/home/ubuntu'
                     sh '$CONNECT "curl ifconfig.io"'
                     sh '$CONNECT "sudo apt install zip -y"'
                     sh '$CONNECT "rm -rf /var/www/html/"'
@@ -47,12 +40,10 @@ pipeline {
         stage('Clean-Up') {
             steps {
                 echo 'Remove existing files'
-                sshagent(['web-app-key']) {
+                sshagent(['web-server-key']) {
                     sh '$CONNECT "sudo rm /home/ubuntu/webapp.zip"'
-                    sh '$CONNECT "sudo rm /home/ubuntu/connect.php"'
                 }
             }
         }
-
     }
 }
